@@ -1,15 +1,15 @@
-// Autores: Jo„o Moacir Barth Junior
+// Autores: Jo√£o Moacir Barth Junior
 //          Cynthia Rocha de Oliveira
 
 #include<stdio.h>
 #include<stdlib.h>
 #include <dos.h>
 #include <windows.h>
-#define M 30 //Dimens„o M·xima da matriz
+#define M 30 //Dimens√£o M√°xima da matriz
 #define ML 4 //Quantidade de movimentos possiveis
 #define livre ' '
 #define parede 219
-#define beco '-'
+#define beco 176
 #define rato 1
 #define visitada '.'
 
@@ -157,17 +157,33 @@ void imprime_matriz(){
     }
     printf("\n");
 }
+
+void limpa_memoria(Nodo **N){ //Libera a memoria da pilha
+    Nodo *aux, *atual;
+    aux = *N;
+    atual = *N;
+    if(atual==NULL)
+        free(atual);
+    else{
+        while(aux->prox != NULL){
+            atual=aux;
+            aux = aux->prox;
+            free(atual);
+        }
+        free(aux);
+    }
+}
 void main(){
     int lin,col,aux,i,x1,y1,x2,y2;
     Nodo *aux1;
-    srand( (unsigned)time(NULL) ); //Respons·vel por gerar uma matriz nova a cada vez
+    srand( (unsigned)time(NULL) ); //Respons√°vel por gerar uma matriz nova a cada vez
     inicializa_matriz();
     imprime_matriz();
     inicializa_pilha(&Stack);
     push(&Stack,202);
     do{
         procura_saida(&Stack);
-        Sleep(20);
+        Sleep(150);
     }while(Stack!=NULL && Stack->dado != (M-1)*100+M);
     if(!Stack){
         gotoxy(2,2);
@@ -180,4 +196,5 @@ void main(){
         printf("Labirinto sem saida!!\n");
     }else
         printf("Parabens conseguiu sair do labirinto!!\n");
+    limpa_memoria(&Stack);
 }
