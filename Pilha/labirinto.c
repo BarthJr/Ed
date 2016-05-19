@@ -179,6 +179,9 @@ void main(){
     srand( (unsigned)time(NULL) ); //Responsável por gerar uma matriz nova a cada vez
     inicializa_matriz();
     imprime_matriz();
+    system("pause");
+    system("cls");
+    imprime_matriz();
     inicializa_pilha(&Stack);
     push(&Stack,202);
     do{
