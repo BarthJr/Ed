@@ -111,32 +111,47 @@ void desenha_decolagem(){
               printf("\n\n   __|__              __|__ ");
                 printf("\n*---oOo---*        *---oOo---*  ");
                 printf("\n_____________________________________*_*_*_*___");
-				printf("\n\n"); 	
+				printf("\n\n");
 }
 
 void desenha_pouso(){
-	          printf("\n\n                   _ .");                  
+	          printf("\n\n                   _ .");
                 printf("\n                 (  _ )_");
-                printf("\n                (_  _(_ ,)"); 
-                printf("\n        __|__");   
-                printf("\n     *---oOo---*");    
-                printf("\n"); 
-                printf("\n     _ ."); 
+                printf("\n                (_  _(_ ,)");
+                printf("\n        __|__");
+                printf("\n     *---oOo---*");
+                printf("\n");
+                printf("\n     _ .");
                 printf("\n   (  _ )_");
-                printf("\n (_  _(_ ,)"); 
+                printf("\n (_  _(_ ,)");
                 printf("\n\n");
 }
 
 void desenha_nuvem(){
-	printf("\n                   _ .");                  
+	printf("\n                   _ .");
     printf("\n                 (  _ )_");
-    printf("\n                (_  _(_ ,)"); 
+    printf("\n                (_  _(_ ,)");
     printf("\n");
-    printf("\n"); 
-    printf("\n     _ ."); 
+    printf("\n");
+    printf("\n     _ .");
     printf("\n   (  _ )_");
     printf("\n (_  _(_ ,)");
     printf("\n\n\n\n\n____*_*_*_*__________*_*_*_*_________*_*_*_*___");
+}
+void limpa_memoria(Nodo **N){ //Libera a memoria da fila
+    Nodo *aux, *atual;
+    aux = *N;
+    atual = *N;
+    if(atual==NULL)
+        free(atual);
+    else{
+        while(aux->prox != NULL){
+            atual=aux;
+            aux = aux->prox;
+            free(atual);
+        }
+        free(aux);
+    }
 }
 
 int main(){
@@ -149,9 +164,9 @@ int main(){
     do{
     	system("cls");
     	printf("\n                     __|__");
-printf("\n            __|__ *---oOo---*"); 
+printf("\n            __|__ *---oOo---*");
 printf("\n   __|__ *---oOo---*");
-printf("\n*---oOo---*"); 
+printf("\n*---oOo---*");
 printf("\n\n\n");
     	printf("               CONTROLADOR DE VOO");
         printf("\n\n1. Adicionar aviao na fila para decolagem");
@@ -180,7 +195,7 @@ printf("\n\n\n");
                 printf("\nDestino: ");
                 gets(destino);
                 insere_fim_fila(&Decolagem, id, nome, origem, destino);
-                printf("\n\n\n\n"); 
+                printf("\n\n\n\n");
                 system("pause");
                 break;
             case 2: //Insere no FIM Pouso
@@ -197,21 +212,21 @@ printf("\n\n\n");
                 printf("\nDestino: ");
                 gets(destino);
                 insere_fim_fila(&Pouso, id, nome, origem, destino);
-                printf("\n\n\n\n"); 
+                printf("\n\n\n\n");
                 system("pause");
                 break;
             case 3: //Imprime fila Decolagem
                 system("cls");
                 printf("   FILA PARA DECOLAGEM:");
                 imprime_fila(Decolagem);
-                printf("\n\n\n\n"); 
+                printf("\n\n\n\n");
                 system("pause");
                 break;
             case 4: //Imprime fila Pouso
                 system("cls");
                 printf("   FILA PARA POUSO:");
                 imprime_fila(Pouso);
-                printf("\n\n\n\n"); 
+                printf("\n\n\n\n");
                 system("pause");
                 break;
             case 5: //Conta aviao Decolagem
@@ -225,12 +240,12 @@ printf("\n\n\n");
                     desenha_decolagem();
                     printf("\n\nO numero de avioes esperando para decolar eh de: %d", cont);
                 }
-				printf("\n\n\n\n"); 
+				printf("\n\n\n\n");
                 system("pause");
                 break;
             case 6: //Conta avião pouso
-                system("cls"); 
-				printf("     POUSO");            
+                system("cls");
+				printf("     POUSO");
                 cont = conta_aviao(Pouso);
                 if (cont == 0){
                     desenha_nuvem();
@@ -239,7 +254,7 @@ printf("\n\n\n");
                     desenha_pouso();
                     printf("\n\nO numero de avioes esperando para pousar eh de: %d", cont);
 			    }
-				printf("\n\n\n\n"); 
+				printf("\n\n\n\n");
                 system("pause");
                 break;
             case 7: //Imprimir primeiro NODO Decolagem e remove inicio fila Decolagem
@@ -253,7 +268,7 @@ printf("\n\n\n");
                     desenha_decolagem();
                     printf("\n\nO aviao %d esta decolando ", id);
                 }
-				printf("\n\n\n\n"); 
+				printf("\n\n\n\n");
                 system("pause");
                 break;
             case 8: //Imprimir primeiro NODO Pouso e remove inicio fila Pouso.
@@ -267,7 +282,7 @@ printf("\n\n\n");
                     desenha_pouso();
                     printf("\n\nO aviao %d esta pousando", id);
                 }
-				printf("\n\n\n\n"); 
+				printf("\n\n\n\n");
                 system("pause");
                 break;
             case 9: //Sair
@@ -277,5 +292,7 @@ printf("\n\n\n");
                 printf("\nOpcao Invalida!!");
         }
     }while(menu != 9);
+    limpa_memoria(&Pouso);
+    limpa_memoria(&Decolagem);
     return 0;
 }
